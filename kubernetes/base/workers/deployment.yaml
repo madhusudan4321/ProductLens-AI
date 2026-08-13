@@ -1,0 +1,34 @@
+# ProductLens AI — Workers Deployment
+# Placeholder — will be fully configured in Phase 10
+# Workers will use HPA for horizontal scaling based on queue depth
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workers
+  namespace: productlens
+  labels:
+    app: productlens
+    component: workers
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: productlens
+      component: workers
+  template:
+    metadata:
+      labels:
+        app: productlens
+        component: workers
+    spec:
+      containers:
+        - name: worker
+          image: productlens/workers:latest  # TODO: Update with actual registry
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          # env, configMap, HPA to be configured in Phase 10

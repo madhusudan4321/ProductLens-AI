@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  # ===========================
+  # Infrastructure
+  # ===========================
+  mongodb:
+    image: mongo:7
+    container_name: productlens-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: productlens-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ===========================
+  # Application Services
+  # (uncomment when ready to run via Docker)
+  # ===========================
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: productlens-backend
+  #   ports:
+  #     - "5000:5000"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: productlens-frontend
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - backend
+  #   restart: unless-stopped
+
+  # ai-service:
+  #   build:
+  #     context: ./ai-service
+  #     dockerfile: Dockerfile
+  #   container_name: productlens-ai-service
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - .env
+  #   restart: unless-stopped
+
+  # workers:
+  #   build:
+  #     context: ./workers
+  #     dockerfile: Dockerfile
+  #   container_name: productlens-workers
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     redis:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+
+volumes:
+  mongodb_data:
+  redis_data:

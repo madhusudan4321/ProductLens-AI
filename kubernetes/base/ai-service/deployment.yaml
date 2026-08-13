@@ -1,0 +1,35 @@
+# ProductLens AI — AI Service Deployment
+# Placeholder — will be fully configured in Phase 10
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-service
+  namespace: productlens
+  labels:
+    app: productlens
+    component: ai-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: productlens
+      component: ai-service
+  template:
+    metadata:
+      labels:
+        app: productlens
+        component: ai-service
+    spec:
+      containers:
+        - name: ai-service
+          image: productlens/ai-service:latest  # TODO: Update with actual registry
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          # livenessProbe, readinessProbe, env to be configured in Phase 10
