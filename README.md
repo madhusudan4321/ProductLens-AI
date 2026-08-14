@@ -423,7 +423,7 @@ Copy `.env.example` → `.env` at the project root.
 |-------|------|--------|-----------------|
 | 1 | Project Foundation | ✅ Complete | 4 services, Docker, health checks |
 | 2 | Authentication | ✅ Complete | JWT auth, login/register/profile UI |
-| 3 | Product Search + Resolution | 🔲 Planned | Product model, search API, resolution |
+| 3 | Product Search + Resolution | ✅ Complete | Product model, search API, resolution |
 | 4 | AI Research Pipeline | 🔲 Planned | Web research, BullMQ jobs, AI service |
 | 5 | Extraction + Validation + Provenance | 🔲 Planned | Spec extraction, cross-validation, scoring |
 | 6 | Storage + Caching + Deduplication | 🔲 Planned | Redis cache, dedup, query optimization |
